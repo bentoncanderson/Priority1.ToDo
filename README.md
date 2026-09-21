@@ -1,8 +1,6 @@
 # Priority1.ToDo
 
-A deliberately minimal full-stack TODO application. It is the starting point for a
-take-home exercise: the CRUD basics work end to end, leaving obvious room to add
-functionality.
+A deliberately minimal full-stack TODO application. It is the starting point for a take-home skills exercise: the CRUD basics work end to end, leaving obvious room to add functionality.
 
 - **Backend:** .NET 8 Web API, Entity Framework Core (Code First), SQL Server
 - **Frontend:** React (Vite, plain JavaScript)
@@ -19,8 +17,7 @@ functionality.
 | [Docker Desktop](https://www.docker.com/products/docker-desktop/) | Runs the SQL Server container |
 | `dotnet-ef` CLI tool | Install once: `dotnet tool install --global dotnet-ef` |
 
-Only SQL Server runs in Docker. The API and the React app run **natively** on your
-machine (`dotnet run` / `npm run dev`).
+Only SQL Server runs in Docker. The API and the React app run **natively** on your machine (`dotnet run` / `npm run dev`).
 
 ---
 
@@ -34,17 +31,21 @@ From the repo root:
 docker-compose up -d
 ```
 
-This starts SQL Server 2022 on `localhost:1433` with the SA credentials that the API
-is already configured to use (see `server/Priority1.ToDo.Api/appsettings.Development.json`).
-Data is kept in a named Docker volume, so it survives container restarts.
+This starts SQL Server 2022 on `localhost:1433` with the SA credentials that the API is already configured to use (see `server/Priority1.ToDo.Api/appsettings.Development.json`). Data is kept in a named Docker volume, so it survives container restarts.
 
 ### 2. Apply the database migration
 
-The database schema is created by the checked-in EF migration. It is **not** applied
-automatically on startup — run it yourself:
+The database schema is created by the checked-in EF migration. It is **not** applied automatically on startup — run it yourself:
 
 ```bash
 cd server/Priority1.ToDo.Api
+dotnet ef database update
+```
+
+**Note**: To add and apply new migrations to your local database during development run the below commands from `server/Priority1.ToDo.Api`:
+
+```bash
+dotnet ef migrations add < MigrationName > --project ../Priority1.ToDo.Core --startup-project .
 dotnet ef database update
 ```
 
@@ -58,12 +59,9 @@ From `server/Priority1.ToDo.Api`:
 dotnet run
 ```
 
-The API listens on **http://localhost:5000**. In Development, **Swagger UI is served at
-the root**: open http://localhost:5000/ to explore and try the endpoints.
+The API listens on **http://localhost:5000**. In Development, **Swagger UI is served at the root**: open http://localhost:5000/ to explore and try the endpoints.
 
-> **macOS note:** port 5000 is sometimes taken by the AirPlay Receiver. If so, run
-> `dotnet run --urls http://localhost:5001` and update the client's API base URL
-> (see below) to match.
+> **macOS note:** port 5000 is sometimes taken by the AirPlay Receiver. If so, run `dotnet run --urls http://localhost:5001` and update the client's API base URL (see below) to match.
 
 ### 4. Run the React app
 
@@ -74,16 +72,13 @@ npm i
 npm run dev
 ```
 
-Vite serves the app at **http://localhost:5173**. It talks to the API at
-`http://localhost:5000` by default.
+Vite serves the app at **http://localhost:5173**. It talks to the API at `http://localhost:5000` by default.
 
-**Changing the API URL:** it lives in one place — `client/src/api.js` (the
-`API_BASE_URL` constant). You can also override it without editing code by copying
-`client/.env.example` to `client/.env` and setting `VITE_API_BASE_URL`.
+**Changing the API URL:** it lives in one place — `client/src/api.js` (the `API_BASE_URL` constant). You can also override it without editing code by copying `client/.env.example` to `client/.env` and setting `VITE_API_BASE_URL`.
 
 ---
 
-## Project structure
+## Application structure
 
 ```
 Priority1.ToDo/
@@ -91,7 +86,7 @@ Priority1.ToDo/
 ├── global.json                   # Pins the build to the .NET 8 SDK
 ├── server/
 │   ├── Priority1.ToDo.sln
-│   ├── Priority1.ToDo.Api/       # ASP.NET Core Web API (startup project)
+│   ├── Priority1.ToDo.Api/       # ASP.NET Core Web API (startup application)
 │   │   ├── Controllers/          # TodosController — thin, calls into services
 │   │   ├── Models/               # Request/response DTOs
 │   │   ├── Program.cs            # DI, EF, CORS, Swagger wiring
@@ -118,8 +113,7 @@ Priority1.ToDo/
 | PUT | `/todos/{id}` | Update a todo |
 | DELETE | `/todos/{id}` | Delete a todo |
 
-The `Todo` entity: `Id`, `Title` (required), `IsComplete` (default `false`),
-`CreateDate` (set on insert), `UpdateDate` (set on insert and every update).
+The `Todo` entity: `Id`, `Title` (required), `IsComplete` (default `false`), `CreateDate` (set on insert), `UpdateDate` (set on insert and every update).
 
 ### Notes / intentional simplifications
 
