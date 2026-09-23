@@ -1,4 +1,5 @@
 # Priority1.ToDo
+by Benton Anderson
 
 A deliberately minimal full-stack TODO application. It is the starting point for a take-home skills exercise: the CRUD basics work end to end, leaving obvious room to add functionality.
 
