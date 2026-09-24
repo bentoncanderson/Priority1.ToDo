@@ -11,6 +11,7 @@ public class TodoItem
     public DateTime UpdateDate { get; set; }
     public int TodoListId { get; set; }
     public TodoList TodoList { get; set; }
+    public DateTime? DueDate { get; set; }
 
     public static TodoItem From(Todo todo)
     {
@@ -22,7 +23,8 @@ public class TodoItem
             CreateDate = todo.CreateDate,
             UpdateDate = todo.UpdateDate,
             TodoListId = todo.TodoListId,
-            TodoList = todo.TodoList
+            TodoList = todo.TodoList,
+            DueDate = todo.DueDate
         };
     }
 
@@ -36,7 +38,8 @@ public class TodoItem
             CreateDate = CreateDate,
             UpdateDate = UpdateDate,
             TodoListId = TodoListId,
-            TodoList = TodoList
+            TodoList = TodoList,
+            DueDate = DueDate
         };
     }
 }
