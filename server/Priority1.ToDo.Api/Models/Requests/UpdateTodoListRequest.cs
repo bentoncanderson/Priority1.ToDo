@@ -3,21 +3,18 @@ using Priority1.ToDo.Core.Domain;
 
 namespace Priority1.ToDo.Api.Models.Requests;
 
-public class UpdateTodoRequest
+public class UpdateTodoListRequest
 {
     
     [Required]
     public string Title { get; set; } = string.Empty;
 
-    public bool IsComplete { get; set; }
-
-    public Todo ToModel(int id)
+    public TodoList ToModel(int id)
     {
-        return new Todo
+        return new TodoList
         {
             Id = id,
-            Title = Title,
-            IsComplete = IsComplete
+            Title = Title
         };
     }
 }

@@ -5,7 +5,7 @@ using Priority1.ToDo.Core.Domain;
 
 namespace Priority1.ToDo.Core.Services;
 
-public class TodoService : ITodoService
+public class TodoService : ITodoService<Todo>
 {
     private readonly AppDbContext _context;
 
@@ -16,12 +16,12 @@ public class TodoService : ITodoService
 
     public async Task<List<Todo>> GetAllAsync(CancellationToken ct = default)
     {
-        return await _context.Todos.ToListAsync(ct);
+        return await _context.Todos.Include(x => x.TodoList).ToListAsync(ct);
     }
 
     public async Task<Todo?> GetByIdAsync(int id, CancellationToken ct = default)
     {
-        return await _context.Todos.FirstOrDefaultAsync(t => t.Id == id, ct);
+        return await _context.Todos.Include(x => x.TodoList).FirstOrDefaultAsync(t => t.Id == id, ct);
     }
 
     public async Task<Todo> CreateAsync(Todo itemToCreate, CancellationToken ct = default)
