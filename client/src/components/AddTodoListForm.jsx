@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-export default function AddTodoForm({ onAdd, listId }) {
+export default function AddTodoListForm({ onAdd }) {
   const [title, setTitle] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
     const trimmed = title.trim();
     if (!trimmed) return;
-    onAdd(trimmed, listId);
+    onAdd(trimmed);
     setTitle('');
   }
 
@@ -15,7 +15,7 @@ export default function AddTodoForm({ onAdd, listId }) {
     <form className="add-form" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="What needs doing?"
+        placeholder="What kind of todos do you want to create?"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />

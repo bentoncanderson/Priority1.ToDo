@@ -3,6 +3,7 @@ export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 const TODOS_URL = `${API_BASE_URL}/todos`;
+const TODOLISTS_URL = `${API_BASE_URL}/todolists`;
 
 async function handle(res) {
   if (!res.ok) {
@@ -16,11 +17,11 @@ export function getTodos() {
   return fetch(TODOS_URL).then(handle);
 }
 
-export function createTodo({ title, isComplete = false }) {
+export function createTodo({ title, todoListId, isComplete = false }) {
   return fetch(TODOS_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, isComplete }),
+    body: JSON.stringify({ title, isComplete, todoListId }),
   }).then(handle);
 }
 
@@ -34,4 +35,28 @@ export function updateTodo(id, { title, isComplete }) {
 
 export function deleteTodo(id) {
   return fetch(`${TODOS_URL}/${id}`, { method: 'DELETE' }).then(handle);
+}
+
+export function getTodoLists() {
+  return fetch(TODOLISTS_URL).then(handle);
+}
+
+export function createTodoList({ title }) {
+  return fetch(TODOLISTS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title }),
+  }).then(handle);
+}
+
+export function updateTodoList(id, { title }) {
+  return fetch(`${TODOLISTS_URL}/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title }),
+  }).then(handle);
+}
+
+export function deleteTodoList(id) {
+  return fetch(`${TODOLISTS_URL}/${id}`, { method: 'DELETE' }).then(handle);
 }

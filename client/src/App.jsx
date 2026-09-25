@@ -1,58 +1,49 @@
 import { useEffect, useState } from 'react';
-import { getTodos, createTodo, updateTodo, deleteTodo } from './api';
-import AddTodoForm from './components/AddTodoForm';
-import TodoList from './components/TodoList';
+import { getTodoLists, getTodos, createTodoList, updateTodoList, deleteTodoList } from './api';
+import AddTodoListForm from './components/AddTodoListForm';
+import TodoListCompendium from './components/TodoListCompendium';
 
 export default function App() {
+  const [lists, setTodoLists] = useState([]);
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Load all todos once on mount.
+  // Load all todo lists and todos once on mount.
   useEffect(() => {
-    getTodos()
-      .then(setTodos)
+    Promise.all([getTodoLists(), getTodos()])
+      .then(([listsData, todosData]) => {
+        setTodoLists(listsData);
+        setTodos(todosData);
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, []);
 
-  async function handleAdd(title) {
+  async function handleAddTodoList(title) {
     try {
-      const created = await createTodo({ title });
-      setTodos((prev) => [...prev, created]);
+      const created = await createTodoList({ title });
+      setTodoLists((prev) => [...prev, created]);
     } catch (e) {
       setError(e.message);
     }
   }
 
-  async function handleToggle(todo) {
+  async function handleRenameTodoList(todoList, title) {
     try {
-      const updated = await updateTodo(todo.id, {
-        title: todo.title,
-        isComplete: !todo.isComplete,
+      const updated = await updateTodoList(todoList.id, {
+        title
       });
-      setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+      setTodoLists((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
     } catch (e) {
       setError(e.message);
     }
   }
 
-  async function handleRename(todo, title) {
+  async function handleDeleteTodoList(todoList) {
     try {
-      const updated = await updateTodo(todo.id, {
-        title,
-        isComplete: todo.isComplete,
-      });
-      setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
-    } catch (e) {
-      setError(e.message);
-    }
-  }
-
-  async function handleDelete(todo) {
-    try {
-      await deleteTodo(todo.id);
-      setTodos((prev) => prev.filter((t) => t.id !== todo.id));
+      await deleteTodoList(todoList.id);
+      setTodoLists((prev) => prev.filter((t) => t.id !== todoList.Id));
     } catch (e) {
       setError(e.message);
     }
@@ -60,20 +51,20 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1>Priority1 ToDo</h1>
+      <h1>Priority1 ToDo Lists</h1>
 
       {error && <div className="error">{error}</div>}
 
-      <AddTodoForm onAdd={handleAdd} />
+      <AddTodoListForm onAdd={handleAddTodoList} />
 
       {loading ? (
         <p className="muted">Loading…</p>
       ) : (
-        <TodoList
+        <TodoListCompendium
+          lists={lists}
           todos={todos}
-          onToggle={handleToggle}
-          onRename={handleRename}
-          onDelete={handleDelete}
+          onRename={handleRenameTodoList}
+          onDelete={handleDeleteTodoList}
         />
       )}
     </div>
