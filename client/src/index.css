@@ -23,6 +23,7 @@ h1 {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .add-form input {
@@ -124,7 +125,6 @@ ul.todo-list {
 }
 
 .todo-item.overdue .due-date {
-  border-color: #b00020;
   color: #b00020;
 }
 
