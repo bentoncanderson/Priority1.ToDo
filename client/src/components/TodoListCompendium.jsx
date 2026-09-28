@@ -1,6 +1,6 @@
 import TodoList from './TodoList';
 
-export default function TodoListCompendium({ lists, todos, onToggle, onRename, onDelete }) {
+export default function TodoListCompendium({lists, todos, onRenameList, onDeleteList, onAddTodo, onToggleTodo, onRenameTodo, onDeleteTodo}) {
   if (lists.length === 0) {
     return <p className="muted">No todo lists yet. Add one above.</p>;
   }
@@ -12,8 +12,12 @@ export default function TodoListCompendium({ lists, todos, onToggle, onRename, o
           key={list.id}
           list={list}
           todos={todos.filter((todo) => todo.todoListId === list.id)}
-          onRename={onRename}
-          onDelete={onDelete}
+          onRename={onRenameList}
+          onDelete={onDeleteList}
+          onAddTodo={onAddTodo}
+          onToggleTodo={onToggleTodo}
+          onRenameTodo={onRenameTodo}
+          onDeleteTodo={onDeleteTodo}
         />
       ))}
     </ul>

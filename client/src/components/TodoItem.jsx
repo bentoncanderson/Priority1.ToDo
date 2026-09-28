@@ -48,10 +48,16 @@ export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
         </span>
       )}
 
-      {!editing && (
-        <button onClick={() => setEditing(true)}>Edit</button>
-      )}
-      <button onClick={() => onDelete(todo)}>Delete</button>
+      <div className="todo-list-actions">
+          {!editing && (
+            <button className="btn-small" onClick={() => setEditing(true)}>
+              Edit
+            </button>
+          )}
+          <button className="btn-small btn-danger" onClick={() => onDelete(todo)}>
+            Delete
+          </button>
+        </div>
     </li>
   );
 }

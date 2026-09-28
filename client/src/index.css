@@ -56,6 +56,37 @@ button.primary:hover {
   background: #1a7f37;
 }
 
+.todo-list-compendium {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.todo-list-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.todo-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.todo-list-title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.todo-list-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
 ul.todo-list {
   list-style: none;
   padding: 0;
@@ -99,4 +130,26 @@ ul.todo-list {
 .error {
   color: #cf222e;
   margin-bottom: 1rem;
+}
+
+.btn-small {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.btn-small:hover {
+  background: #f3f3f3;
+}
+
+.btn-danger {
+  color: #b00020;
+  border-color: #e6b3bb;
+}
+
+.btn-danger:hover {
+  background: #fdecee;
 }
