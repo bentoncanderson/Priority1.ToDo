@@ -2,16 +2,7 @@ import { useState } from 'react';
 import TodoItem from './TodoItem';
 import AddTodoForm from './AddForms/AddTodoForm';
 
-export default function TodoList({
-  list,
-  todos,
-  onRename,
-  onDelete,
-  onAddTodo,
-  onToggleTodo,
-  onRenameTodo,
-  onDeleteTodo,
-}) {
+export default function TodoList({list, todos, onRename, onDelete, onAddTodo, onToggleTodo, onRenameTodo, onDueDateUpdate, onDeleteTodo}) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(list.title);
 
@@ -75,6 +66,7 @@ export default function TodoList({
               todo={todo}
               onToggle={onToggleTodo}
               onRename={onRenameTodo}
+              onDueDateUpdate={onDueDateUpdate}
               onDelete={onDeleteTodo}
             />
           ))}

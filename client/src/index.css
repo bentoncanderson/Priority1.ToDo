@@ -123,6 +123,20 @@ ul.todo-list {
   font-size: 1rem;
 }
 
+.todo-item.overdue .due-date {
+  border-color: #b00020;
+  color: #b00020;
+}
+
+.overdue-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #b00020;
+  background: #fdecee;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
 .muted {
   color: #6e7781;
 }
@@ -152,4 +166,12 @@ ul.todo-list {
 
 .btn-danger:hover {
   background: #fdecee;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }

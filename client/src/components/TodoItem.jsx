@@ -1,8 +1,18 @@
 import { useState } from 'react';
 
-export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
+function todayString() {
+  const d = new Date();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${d.getFullYear()}-${mm}-${dd}`;
+}
+
+export default function TodoItem({ todo, onToggle, onRename, onDueDateUpdate, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(todo.title);
+
+  const dueDate = todo.dueDate ? todo.dueDate.slice(0, 10) : '';
+  const isOverdue = dueDate !== '' && !todo.isComplete && dueDate < todayString();
 
   function saveEdit() {
     const trimmed = draft.trim();
@@ -15,7 +25,7 @@ export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
   }
 
   return (
-    <li className="todo-item">
+    <li className={`todo-item ${isOverdue ? 'overdue' : ''}`}>
       <input
         type="checkbox"
         checked={todo.isComplete}
@@ -47,6 +57,15 @@ export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
           {todo.title}
         </span>
       )}
+
+      <input
+        type="date"
+        className="due-date"
+        value={dueDate}
+        onChange={(e) => onDueDateUpdate(todo, e.target.value || null)}
+        title="Due date"
+      />
+      {isOverdue && <span className="overdue-badge">Overdue</span>}
 
       <div className="todo-list-actions">
           {!editing && (

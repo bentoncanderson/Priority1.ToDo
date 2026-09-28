@@ -25,11 +25,11 @@ export function createTodo({ title, todoListId, isComplete = false }) {
   }).then(handle);
 }
 
-export function updateTodo(id, { title, isComplete }) {
+export function updateTodo(id, { title, isComplete, dueDate }) {
   return fetch(`${TODOS_URL}/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, isComplete }),
+    body: JSON.stringify({ title, isComplete, dueDate }),
   }).then(handle);
 }
 
