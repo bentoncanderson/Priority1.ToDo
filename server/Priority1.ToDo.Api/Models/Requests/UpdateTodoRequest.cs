@@ -7,9 +7,11 @@ public class UpdateTodoRequest
 {
     
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     public bool IsComplete { get; set; }
+
+    public DateTime? DueDate { get; set; }
 
     public Todo ToModel(int id)
     {
@@ -17,7 +19,8 @@ public class UpdateTodoRequest
         {
             Id = id,
             Title = Title,
-            IsComplete = IsComplete
+            IsComplete = IsComplete,
+            DueDate = DueDate
         };
     }
 }

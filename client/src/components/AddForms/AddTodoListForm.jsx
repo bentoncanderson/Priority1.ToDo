@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function AddTodoForm({ onAdd }) {
+export default function AddTodoListForm({ onAdd }) {
   const [title, setTitle] = useState('');
 
   function handleSubmit(e) {
@@ -15,7 +15,7 @@ export default function AddTodoForm({ onAdd }) {
     <form className="add-form" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="What needs doing?"
+        placeholder="What kind of todos do you want to create?"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />

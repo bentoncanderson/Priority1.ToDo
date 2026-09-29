@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Priority1.ToDo.Core.Data;
 using Priority1.ToDo.Core.Services.Interfaces;
 using Priority1.ToDo.Core.Services;
+using Priority1.ToDo.Core.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,8 @@ const string DevCorsPolicy = "AllowLocalDev";
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<ITodoService<Todo>, TodoService>();
+builder.Services.AddScoped<ITodoService<TodoList>, TodoListService>();
 
 builder.Services.AddControllers();
 

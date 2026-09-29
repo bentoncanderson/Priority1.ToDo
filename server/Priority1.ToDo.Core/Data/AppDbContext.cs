@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Todo> Todos => Set<Todo>();
+    public DbSet<TodoList> TodoLists => Set<TodoList>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

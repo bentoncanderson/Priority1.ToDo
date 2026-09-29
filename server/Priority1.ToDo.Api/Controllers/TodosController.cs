@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Priority1.ToDo.Api.Models;
 using Priority1.ToDo.Api.Models.Requests;
+using Priority1.ToDo.Core.Domain;
 using Priority1.ToDo.Core.Services.Interfaces;
 
 namespace Priority1.ToDo.Api.Controllers;
@@ -9,9 +10,9 @@ namespace Priority1.ToDo.Api.Controllers;
 [Route("todos")]
 public class TodosController : ControllerBase
 {
-    private readonly ITodoService _todoService;
+    private readonly ITodoService<Todo> _todoService;
 
-    public TodosController(ITodoService todoService)
+    public TodosController(ITodoService<Todo> todoService)
     {
         _todoService = todoService;
     }
